@@ -1,0 +1,45 @@
+class ProductAnalyzer:
+    def __init__(self, sales_data):
+        self.sales_data = sales_data
+
+    def total_sales_per_day(self):
+        total_sales = {}
+        for sale in self.sales_data:
+            day = sale['date']
+            if day in total_sales:
+                total_sales[day] += 1
+            else:
+                total_sales[day] = 1
+        return total_sales
+
+    def best_selling_product(self):
+        product_sales = {}
+        for sale in self.sales_data:
+            product = sale['product']
+            if product in product_sales:
+                product_sales[product] += 1
+            else:
+                product_sales[product] = 1
+        best_product = max(product_sales, key=product_sales.get)
+        return best_product
+
+    def biggest_single_purchase(self):
+        customer_spending = {}
+        for sale in self.sales_data:
+            customer = sale['customer']
+            amount = sale['amount']
+            if customer in customer_spending:
+                customer_spending[customer] += amount
+            else:
+                customer_spending[customer] = amount
+        biggest_purchase_customer = max(customer_spending, key=customer_spending.get)
+        return biggest_purchase_customer
+
+    def products_sold_above_quantity(self, quantity):
+        products = []
+        for sale in self.sales_data:
+            product = sale['product']
+            amount = sale['amount']
+            if amount > quantity and product not in products:
+                products.append(product)
+        return products

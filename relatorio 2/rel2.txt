@@ -1,0 +1,57 @@
+from pymongo import MongoClient
+
+# Conectar ao MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+db = client['escola']  # Nome do banco de dados
+
+# Definir a coleção "aula"
+aula_collection = db['aula']
+
+class Professor:
+    def __init__(self, nome):
+        self.nome = nome
+
+class Aluno:
+    def __init__(self, nome):
+        self.nome = nome
+
+# Criar objetos Professor
+professor1 = Professor("renzo")
+professor2 = Professor("soned")
+professor3 = Professor("marcelo")
+
+# Criar objetos Aluno
+aluno1 = Aluno("dog")
+aluno2 = Aluno("garga")
+aluno3 = Aluno("caçula")
+aluno4 = Aluno("Pedro")
+aluno5 = Aluno("portuga")
+
+# Criar objetos Aula
+aula1 = {
+    'professor': professor1.nome,
+    'assunto': "Programação Orientada a Objetos",
+    'alunos': [aluno1.nome, aluno2.nome, aluno3.nome, aluno4.nome]
+}
+
+aula2 = {
+    'professor': professor2.nome,
+    'assunto': "Banco de Dados 2",
+    'alunos': [aluno2.nome, aluno3.nome, aluno4.nome, aluno5.nome]
+}
+
+aula3 = {
+    'professor': professor3.nome,
+    'assunto': "Redes de Computadores",
+    'alunos': [aluno3.nome, aluno4.nome, aluno5.nome, aluno1.nome]
+}
+
+# Inserir as aulas na coleção
+aula_collection.insert_many([aula1, aula2, aula3])
+
+# Imprimir as aulas
+for aula in aula_collection.find():
+    print("Professor:", aula['professor'])
+    print("Assunto:", aula['assunto'])
+    print("Alunos:", aula['alunos'])
+    print()
